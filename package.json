@@ -1,0 +1,32 @@
+{
+  "name": "prueba-tecnica-indra",
+  "version": "1.0.0",
+  "description": "prueba tecnica nodejs + serverless",
+  "main": "index.js",
+  "author": "mcarohijar",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcarohijar/prueba-tecnica-indra.git"
+  },
+  "scripts": {
+    "deploy": "serverless deploy",
+    "install-dynamodb": "serverless dynamodb install",
+    "uninstall-dynamodb": "serverless dynamodb remove",
+    "offline": "serverless offline start",
+    "test": "npm run test",
+    "lint": "eslint src/js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1148.0",
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "serverless": "^3.19.0",
+    "serverless-dynamodb-local": "^0.2.35",
+    "serverless-http": "^3.0.1",
+    "serverless-offline": "^8.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0"
+  }
+}
