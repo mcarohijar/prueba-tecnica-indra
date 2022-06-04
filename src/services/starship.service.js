@@ -1,81 +1,40 @@
-const axios = require('axios');
-const dynamoDb = require('../configs/db.config.js');
-const dbConnection = require('../configs/db.config.js');
 const NaveEspacial = require('../models/starship.model.js');
 const errors = require('../errors/errors.js');
+const StarshipRepository = require('../providers/starship.provider.js');
+const SwapiProvider = require('../providers/swapi.provider.js');
 
 const serviceName = 'starships';
-const { STARSHIPS_COLLECTION, SWAPI_URL } = process.env;
-const STARSHIP_URL = `${SWAPI_URL}/${serviceName}`;
 
 class StarshipService {
   async getAll() {
-    const params = {
-      TableName: STARSHIPS_COLLECTION,
-    };
-    try {
-      const response = await dbConnection.scan(params).promise();
-      return { items: response.Items };
-    } catch (err) {
-      throw new errors.BdConnectionError();
-    }
+    // get all
+    return StarshipRepository.getAllStarships();
   }
 
   async getById(request) {
     const { starshipId } = request;
-
-    let dbResponse = null;
-    try {
-      const parsedStarshipId = typeof starshipId === 'number' ? starshipId : parseInt(starshipId, 10);
-      const params = {
-        TableName: STARSHIPS_COLLECTION,
-        FilterExpression: 'id = :starshipId',
-        ExpressionAttributeValues: {
-          ":starshipId": parsedStarshipId,
-        }
-      };
-      dbResponse = await dbConnection.scan(params).promise();
-    } catch (err) {
-      throw new errors.BdConnectionError(serviceName);
-    }
-    if (!dbResponse.Items.length) throw new errors.NotFoundException(serviceName);
-    return dbResponse.Items[0];
+    // get from db
+    const starshipModel =  await StarshipRepository.getStarshipById(starshipId);
+    // not found exception
+    if (!starshipModel) throw new errors.NotFoundException(serviceName);
+    return starshipModel;
   }
 
   async findAndRegister(request) {
     const { starshipId } = request;
 
     // validate if starship is not already registered
-    let getByIdResponse = null;
-    try {
-      getByIdResponse = await this.getById(request);
-    } catch (err) {
-    }
-    if (getByIdResponse) throw new errors.AlreadyExistException(serviceName);
+    const starship = await StarshipRepository.getStarshipById(starshipId);
+    if (starship) throw new errors.AlreadyExistException(serviceName);
 
     // get starship from swapi
-    let apiResponse = null;
-    try {
-      const getStarshipUrl = `${STARSHIP_URL}/${starshipId}`;
-      const { data } = await axios.get(getStarshipUrl);
-      apiResponse = data;
-    } catch (err) {
-      console.log('get starship from swapi Error: ', err.message);
-      throw new errors.ApiConnectionException(serviceName);
-    }
+    const apiResponse = await SwapiProvider.getStarshipById(starshipId);
 
     // insert starship on db
     const starshipModel = new NaveEspacial({ id: starshipId, ...apiResponse });
-    try {
-      const params = {
-        TableName: STARSHIPS_COLLECTION,
-        Item: starshipModel,
-      }
-      await dynamoDb.put(params).promise();
-    } catch (err) {
-      console.log('put starship on db Error: ', err.message);
-      return err;
-    }
+    await StarshipRepository.insertstarship(starshipModel);
+
+    // return inserted model
     return starshipModel;
   }
 }
