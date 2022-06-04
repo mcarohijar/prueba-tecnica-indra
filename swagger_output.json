@@ -73,47 +73,6 @@
           }
         }
       }
-    },
-    "/vehicles/{userId}": {
-      "get": {
-        "summary": "get all Starship registered on DB",
-        "description": "",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/vehicles/": {
-      "get": {
-        "summary": "get all Starship registered on DB",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "summary": "get all Starship registered on DB",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
     }
   }
 }

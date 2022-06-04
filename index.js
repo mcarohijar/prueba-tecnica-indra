@@ -7,3 +7,4 @@ app.use(bodyParser.json({strict: false}));
 require('./src/routes/index.js')(app);
 
 module.exports.handler = serverless(app);
+module.exports.app = app;

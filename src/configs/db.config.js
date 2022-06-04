@@ -1,6 +1,5 @@
 const AWS = require('aws-sdk');
 const IS_OFFLINE = process.env.IS_OFFLINE;
-
 // initializie dynamodb connection
 let dynamoDb;
 if (IS_OFFLINE === 'true') {
@@ -11,5 +10,4 @@ if (IS_OFFLINE === 'true') {
 } else {
   dynamoDb = new AWS.DynamoDB.DocumentClient();
 };
-
 module.exports = dynamoDb;

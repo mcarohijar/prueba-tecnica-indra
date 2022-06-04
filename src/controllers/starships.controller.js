@@ -1,14 +1,12 @@
 const starshipService = require('../services/starship.service.js');
 
 class StarshipController {
-  constructor(){}
-
   async getAll(req, res, next) {
     // #swagger.summary = 'get all Starship registered on DB'
     try {
         res.json(await starshipService.getAll());
     } catch (err) {
-        console.error(`starship.getAll Error:: `, err.message);
+        console.log(`starship.getAll Error:: `, err.message);
         next(err);
     }
   }
@@ -23,7 +21,7 @@ class StarshipController {
     try {
         res.json(await starshipService.getById(req.params));
     } catch (err) {
-        console.error(`starship.getById Error: `, err.message);
+        console.log(`starship.getById Error: `, err.message);
         next(err);
     }
   }
@@ -40,10 +38,9 @@ class StarshipController {
                 }
 }   */
     try {
-      const response = await starshipService.findAndRegister(req.body);
-      res.json(response);
+      res.json(await starshipService.findAndRegister(req.body));
     } catch (err) {
-      console.error(`starship.register Error: `, err.message);
+      console.log(`starship.register Error: `, err.message);
       next(err);
     }
   }

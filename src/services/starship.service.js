@@ -15,9 +15,8 @@ class StarshipService {
     };
     try {
       const response = await dbConnection.scan(params).promise();
-      return response.Items;
+      return { items: response.Items };
     } catch (err) {
-      console.log(err);
       throw new errors.BdConnectionError();
     }
   }
@@ -64,11 +63,9 @@ class StarshipService {
       console.log('get starship from swapi Error: ', err.message);
       throw new errors.ApiConnectionException(serviceName);
     }
-    console.log({apiResponse});
 
     // insert starship on db
     const starshipModel = new NaveEspacial({ id: starshipId, ...apiResponse });
-    console.log({starshipModel});
     try {
       const params = {
         TableName: STARSHIPS_COLLECTION,

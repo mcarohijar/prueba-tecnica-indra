@@ -77,16 +77,22 @@
         "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-app"
       }
     },
-    "GetUserLogGroup": {
+    "GetAllStarshipsLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-getUser"
+        "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-getAllStarships"
       }
     },
-    "CreateUserLogGroup": {
+    "GetStarshipByIdLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-createUser"
+        "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-getStarshipById"
+      }
+    },
+    "RegisterStarshipLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/prueba-tecnica-indra-dev-registerStarship"
       }
     },
     "IamRoleLambdaExecution": {
@@ -159,7 +165,13 @@
                   "Resource": [
                     {
                       "Fn::GetAtt": [
-                        "UsersDynamoDBTable",
+                        "StarshipDynamoDBTable",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "VehicleDynamoDBTable",
                         "Arn"
                       ]
                     }
@@ -192,7 +204,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/prueba-tecnica-indra/dev/1654242320055-2022-06-03T07:45:20.055Z/prueba-tecnica-indra.zip"
+          "S3Key": "serverless/prueba-tecnica-indra/dev/1654381795007-2022-06-04T22:29:55.007Z/prueba-tecnica-indra.zip"
         },
         "Handler": "index.handler",
         "Runtime": "nodejs12.x",
@@ -201,7 +213,9 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "USERS_TABLE": "users-table-dev"
+            "STARSHIPS_COLLECTION": "INDRA_STARSHIPS",
+            "VEHICLES_COLLECTION": "INDRA_VEHICLES",
+            "SWAPI_URL": "https://swapi.py4e.com/api"
           }
         },
         "Role": {
@@ -215,23 +229,25 @@
         "AppLogGroup"
       ]
     },
-    "GetUserLambdaFunction": {
+    "GetAllStarshipsLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/prueba-tecnica-indra/dev/1654242320055-2022-06-03T07:45:20.055Z/prueba-tecnica-indra.zip"
+          "S3Key": "serverless/prueba-tecnica-indra/dev/1654381795007-2022-06-04T22:29:55.007Z/prueba-tecnica-indra.zip"
         },
         "Handler": "index.handler",
         "Runtime": "nodejs12.x",
-        "FunctionName": "prueba-tecnica-indra-dev-getUser",
+        "FunctionName": "prueba-tecnica-indra-dev-getAllStarships",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "USERS_TABLE": "users-table-dev"
+            "STARSHIPS_COLLECTION": "INDRA_STARSHIPS",
+            "VEHICLES_COLLECTION": "INDRA_VEHICLES",
+            "SWAPI_URL": "https://swapi.py4e.com/api"
           }
         },
         "Role": {
@@ -242,26 +258,28 @@
         }
       },
       "DependsOn": [
-        "GetUserLogGroup"
+        "GetAllStarshipsLogGroup"
       ]
     },
-    "CreateUserLambdaFunction": {
+    "GetStarshipByIdLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/prueba-tecnica-indra/dev/1654242320055-2022-06-03T07:45:20.055Z/prueba-tecnica-indra.zip"
+          "S3Key": "serverless/prueba-tecnica-indra/dev/1654381795007-2022-06-04T22:29:55.007Z/prueba-tecnica-indra.zip"
         },
         "Handler": "index.handler",
         "Runtime": "nodejs12.x",
-        "FunctionName": "prueba-tecnica-indra-dev-createUser",
+        "FunctionName": "prueba-tecnica-indra-dev-getStarshipById",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "USERS_TABLE": "users-table-dev"
+            "STARSHIPS_COLLECTION": "INDRA_STARSHIPS",
+            "VEHICLES_COLLECTION": "INDRA_VEHICLES",
+            "SWAPI_URL": "https://swapi.py4e.com/api"
           }
         },
         "Role": {
@@ -272,37 +290,79 @@
         }
       },
       "DependsOn": [
-        "CreateUserLogGroup"
+        "GetStarshipByIdLogGroup"
       ]
     },
-    "AppLambdaVersionnMMDpxTAbVD2au86gzMhDvBIU6xbntG5kzI5jEJb44": {
+    "RegisterStarshipLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/prueba-tecnica-indra/dev/1654381795007-2022-06-04T22:29:55.007Z/prueba-tecnica-indra.zip"
+        },
+        "Handler": "index.handler",
+        "Runtime": "nodejs12.x",
+        "FunctionName": "prueba-tecnica-indra-dev-registerStarship",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "STARSHIPS_COLLECTION": "INDRA_STARSHIPS",
+            "VEHICLES_COLLECTION": "INDRA_VEHICLES",
+            "SWAPI_URL": "https://swapi.py4e.com/api"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "RegisterStarshipLogGroup"
+      ]
+    },
+    "AppLambdaVersionpXl2mnObWuf8upCh78M2P3gOOwoL3bUCyQcbyrefvw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "g5nVVWDDcNYosXKvA2lNxvqa4n95q2kibOCqCLsR0zY="
+        "CodeSha256": "lrYm8yfHT2He9SRsnIgtV0yNLiyDR5q/mYu4ju6mTJQ="
       }
     },
-    "GetUserLambdaVersion1GyVEYcJnKqZV93TBEx4kb8OY5FAlgQpHuRpNUNMg": {
+    "GetAllStarshipsLambdaVersionN6D4zARglnBz7l3LvmR563nGMClwPI1SHO5PY3vQaA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "GetUserLambdaFunction"
+          "Ref": "GetAllStarshipsLambdaFunction"
         },
-        "CodeSha256": "g5nVVWDDcNYosXKvA2lNxvqa4n95q2kibOCqCLsR0zY="
+        "CodeSha256": "lrYm8yfHT2He9SRsnIgtV0yNLiyDR5q/mYu4ju6mTJQ="
       }
     },
-    "CreateUserLambdaVersionKenuhaZqqQatR1iQ5Q0SxC7YXuZIFDjAYkb9JR1qL8": {
+    "GetStarshipByIdLambdaVersionpJByyz97ROQH82z6ThBvhf9uxI2pc1BHCIGr2WTQsvI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "CreateUserLambdaFunction"
+          "Ref": "GetStarshipByIdLambdaFunction"
         },
-        "CodeSha256": "g5nVVWDDcNYosXKvA2lNxvqa4n95q2kibOCqCLsR0zY="
+        "CodeSha256": "lrYm8yfHT2He9SRsnIgtV0yNLiyDR5q/mYu4ju6mTJQ="
+      }
+    },
+    "RegisterStarshipLambdaVersionOQnm2haEuKE2E8ihUD4u5pj2xKuidjQbSz1IYNU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "RegisterStarshipLambdaFunction"
+        },
+        "CodeSha256": "lrYm8yfHT2He9SRsnIgtV0yNLiyDR5q/mYu4ju6mTJQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -332,7 +392,7 @@
         }
       }
     },
-    "ApiGatewayResourceUsers": {
+    "ApiGatewayResourceStarship": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -341,19 +401,31 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "users",
+        "PathPart": "starship",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayResourceUsersProxyVar": {
+    "ApiGatewayResourceStarshipProxyVar": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Ref": "ApiGatewayResourceUsers"
+          "Ref": "ApiGatewayResourceStarship"
         },
         "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceStarshipRegister": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceStarship"
+        },
+        "PathPart": "register",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -454,13 +526,13 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodUsersProxyVarGet": {
+    "ApiGatewayMethodStarshipProxyVarGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceUsersProxyVar"
+          "Ref": "ApiGatewayResourceStarshipProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -485,7 +557,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "GetUserLambdaFunction",
+                    "GetStarshipByIdLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -497,16 +569,16 @@
         "MethodResponses": []
       },
       "DependsOn": [
-        "GetUserLambdaPermissionApiGateway"
+        "GetStarshipByIdLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodUsersPost": {
+    "ApiGatewayMethodStarshipRegisterPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "POST",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceUsers"
+          "Ref": "ApiGatewayResourceStarshipRegister"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -531,7 +603,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "CreateUserLambdaFunction",
+                    "RegisterStarshipLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -543,10 +615,10 @@
         "MethodResponses": []
       },
       "DependsOn": [
-        "CreateUserLambdaPermissionApiGateway"
+        "RegisterStarshipLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1654242289619": {
+    "ApiGatewayDeployment1654381761278": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -557,8 +629,9 @@
       "DependsOn": [
         "ApiGatewayMethodAny",
         "ApiGatewayMethodProxyVarAny",
-        "ApiGatewayMethodUsersProxyVarGet",
-        "ApiGatewayMethodUsersPost"
+        "ApiGatewayMethodStarshipProxyVarGet",
+        "ApiGatewayMethodStarshipProxyVarGet",
+        "ApiGatewayMethodStarshipRegisterPost"
       ]
     },
     "AppLambdaPermissionApiGateway": {
@@ -598,12 +671,12 @@
         }
       }
     },
-    "GetUserLambdaPermissionApiGateway": {
+    "GetAllStarshipsLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "GetUserLambdaFunction",
+            "GetAllStarshipsLambdaFunction",
             "Arn"
           ]
         },
@@ -635,12 +708,12 @@
         }
       }
     },
-    "CreateUserLambdaPermissionApiGateway": {
+    "GetStarshipByIdLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "CreateUserLambdaFunction",
+            "GetStarshipByIdLambdaFunction",
             "Arn"
           ]
         },
@@ -672,18 +745,55 @@
         }
       }
     },
-    "UsersDynamoDBTable": {
+    "RegisterStarshipLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "RegisterStarshipLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "StarshipDynamoDBTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "userId",
-            "AttributeType": "S"
+            "AttributeName": "id",
+            "AttributeType": "N"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "userId",
+            "AttributeName": "id",
             "KeyType": "HASH"
           }
         ],
@@ -691,7 +801,29 @@
           "ReadCapacityUnits": 1,
           "WriteCapacityUnits": 1
         },
-        "TableName": "users-table-dev"
+        "TableName": "INDRA_STARSHIPS"
+      }
+    },
+    "VehicleDynamoDBTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "N"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        },
+        "TableName": "INDRA_VEHICLES"
       }
     }
   },
@@ -707,28 +839,37 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionnMMDpxTAbVD2au86gzMhDvBIU6xbntG5kzI5jEJb44"
+        "Ref": "AppLambdaVersionpXl2mnObWuf8upCh78M2P3gOOwoL3bUCyQcbyrefvw"
       },
       "Export": {
         "Name": "sls-prueba-tecnica-indra-dev-AppLambdaFunctionQualifiedArn"
       }
     },
-    "GetUserLambdaFunctionQualifiedArn": {
+    "GetAllStarshipsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetUserLambdaVersion1GyVEYcJnKqZV93TBEx4kb8OY5FAlgQpHuRpNUNMg"
+        "Ref": "GetAllStarshipsLambdaVersionN6D4zARglnBz7l3LvmR563nGMClwPI1SHO5PY3vQaA"
       },
       "Export": {
-        "Name": "sls-prueba-tecnica-indra-dev-GetUserLambdaFunctionQualifiedArn"
+        "Name": "sls-prueba-tecnica-indra-dev-GetAllStarshipsLambdaFunctionQualifiedArn"
       }
     },
-    "CreateUserLambdaFunctionQualifiedArn": {
+    "GetStarshipByIdLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateUserLambdaVersionKenuhaZqqQatR1iQ5Q0SxC7YXuZIFDjAYkb9JR1qL8"
+        "Ref": "GetStarshipByIdLambdaVersionpJByyz97ROQH82z6ThBvhf9uxI2pc1BHCIGr2WTQsvI"
       },
       "Export": {
-        "Name": "sls-prueba-tecnica-indra-dev-CreateUserLambdaFunctionQualifiedArn"
+        "Name": "sls-prueba-tecnica-indra-dev-GetStarshipByIdLambdaFunctionQualifiedArn"
+      }
+    },
+    "RegisterStarshipLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "RegisterStarshipLambdaVersionOQnm2haEuKE2E8ihUD4u5pj2xKuidjQbSz1IYNU"
+      },
+      "Export": {
+        "Name": "sls-prueba-tecnica-indra-dev-RegisterStarshipLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

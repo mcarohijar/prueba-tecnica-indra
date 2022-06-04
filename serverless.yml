@@ -28,7 +28,8 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["StarshipDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["VehicleDynamoDBTable", "Arn" ] }
   environment:
     STARSHIPS_COLLECTION: ${self:custom.starshipCollection}
     VEHICLES_COLLECTION: ${self:custom.vehiclesCollection}
@@ -40,14 +41,18 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-  getUser:
+  getAllStarships:
     handler: index.handler
     events:
-      - http: 'GET /users/{proxy+}'
-  createUser:
+      - http: 'GET /starship/'
+  getStarshipById:
     handler: index.handler
     events:
-      - http: 'POST /users'
+      - http: 'GET /starship/{proxy+}'
+  registerStarship:
+    handler: index.handler
+    events:
+      - http: 'POST /starship/register'
 
 resources:
   Resources:
