@@ -9,6 +9,6 @@ router.get('/', starshipsController.getAll);
 router.get('/:starshipId', starshipsController.getById);
 
 /* register a starship from SWAPI */
-router.post('/', starshipsController.register);
+router.post('/register', starshipsController.register);
 
 module.exports = router;

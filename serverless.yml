@@ -32,6 +32,7 @@ provider:
   environment:
     STARSHIPS_COLLECTION: ${self:custom.starshipCollection}
     VEHICLES_COLLECTION: ${self:custom.vehiclesCollection}
+    SWAPI_URL: 'https://swapi.py4e.com/api'
 
 functions:
   app:
@@ -55,11 +56,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: naveId
-            AttributeType: S
+            AttributeName: id
+            AttributeType: N
         KeySchema:
           -
-            AttributeName: naveId
+            AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -70,11 +71,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: naveId
-            AttributeType: S
+            AttributeName: id
+            AttributeType: N
         KeySchema:
           -
-            AttributeName: naveId
+            AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

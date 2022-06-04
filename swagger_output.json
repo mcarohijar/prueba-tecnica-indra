@@ -13,15 +13,7 @@
   "paths": {
     "/starships/": {
       "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
+        "summary": "get all Starship registered on DB",
         "description": "",
         "parameters": [],
         "responses": {
@@ -33,13 +25,46 @@
     },
     "/starships/{starshipId}": {
       "get": {
+        "summary": "get one Starship registered on DB by id",
         "description": "",
         "parameters": [
           {
             "name": "starshipId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "starships ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/starships/register": {
+      "post": {
+        "summary": "register Starship to DB",
+        "description": "",
+        "parameters": [
+          {
+            "name": "starshipId",
+            "in": "body",
+            "description": "starshipss ID",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "starshipId": {
+                  "type": "number",
+                  "example": 11
+                }
+              },
+              "required": [
+                "starshipId"
+              ]
+            }
           }
         ],
         "responses": {
@@ -51,6 +76,7 @@
     },
     "/vehicles/{userId}": {
       "get": {
+        "summary": "get all Starship registered on DB",
         "description": "",
         "parameters": [
           {
@@ -69,6 +95,7 @@
     },
     "/vehicles/": {
       "get": {
+        "summary": "get all Starship registered on DB",
         "description": "",
         "parameters": [],
         "responses": {
@@ -78,6 +105,7 @@
         }
       },
       "post": {
+        "summary": "get all Starship registered on DB",
         "description": "",
         "parameters": [],
         "responses": {

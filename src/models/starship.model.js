@@ -1,6 +1,7 @@
 class NaveEspacial {
   // constructor to initiaze according to api respoonse
   constructor(starship) {
+    this.id = starship.id;
     this.nombre = starship.name;
     this.modelo = starship.model;
     this.tipoNave = starship.starship_class;
@@ -22,4 +23,4 @@ class NaveEspacial {
   }
 }
 
-module.expors = NaveEspacial;
+module.exports = NaveEspacial;
