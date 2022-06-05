@@ -12,6 +12,17 @@ class BdConnectionError extends BaseError {
   }
 }
 
+class RequestValidationException extends BaseError {
+  constructor (
+    name,
+    statusCode = httpStatusCodes.BAD_REQUEST,
+    description = 'invalid request',
+    isOperational = true
+  ) {
+    super(name, statusCode, isOperational, description)
+  }
+}
+
 class NotFoundException extends BaseError {
   constructor (
     name,
@@ -46,6 +57,7 @@ class ApiConnectionException extends BaseError {
 }
 
 module.exports = {
+  RequestValidationException,
   NotFoundException,
   BdConnectionError,
   AlreadyExistException,

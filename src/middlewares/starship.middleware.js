@@ -1,5 +1,6 @@
-const createHttpError = require('http-errors')
 const Joi = require('joi');
+const errors = require('../errors/errors.js');
+const httpStatusCodes = require('../utils/httpStatusCodes.utils.js');
 
 const registerSchema = Joi.object({
   starshipId: Joi.number().required(),
@@ -23,7 +24,9 @@ module.exports = function(validator, type) {
           req.body = validated;
           next();
       } catch (err) {
-        return next(createHttpError(422, {message: err.message}));
+        return res
+          .status(httpStatusCodes.BAD_REQUEST)
+          .send(new errors.RequestValidationException(err.message));
       }
   }
 }

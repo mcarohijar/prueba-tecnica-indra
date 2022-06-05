@@ -7,7 +7,7 @@ class StarshipController {
         res.json(await starshipService.getAll());
     } catch (err) {
         console.log(`starship.getAll Error:: `, err.message);
-        res.status(500).send(err);
+        res.status(err.statusCode).send(err);
     }
   }
   
@@ -22,7 +22,7 @@ class StarshipController {
         res.json(await starshipService.getById(req.params));
     } catch (err) {
         console.log(`starship.getById Error: `, err.message);
-        res.status(500).send(err);
+        res.status(err.statusCode).send(err);
     }
   }
   
@@ -41,7 +41,7 @@ class StarshipController {
       res.json(await starshipService.findAndRegister(req.body));
     } catch (err) {
       console.log(`starship.register Error: `, err.message);
-      res.status(500).send(err);
+      res.status(err.statusCode).send(err);
     }
   }
 }
