@@ -17,7 +17,7 @@ const Validators = {
 
 module.exports = function(validator, type) {
   return async function(req, res, next) {
-      const request = type ? req.params : req.body
+      const request = type === 'get' ? req.params : req.body
       try {
           const validated = await Validators[validator].validateAsync(request);
           req.body = validated;

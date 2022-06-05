@@ -38,7 +38,7 @@ class ApiConnectionException extends BaseError {
   constructor (
     name,
     statusCode = httpStatusCodes.INTERNAL_SERVER,
-    description = 'Api connection error.',
+    description = 'Api error.',
     isOperational = true
   ) {
     super(name, statusCode, isOperational, description)

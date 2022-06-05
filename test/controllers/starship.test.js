@@ -1,4 +1,4 @@
-require('../starships.mocks.js');
+require('../mocks/starships.mocks.js');
 const { app } = require('../../index.js');
 const supertest = require('supertest');
 const axios = require('axios');
