@@ -8,7 +8,7 @@ const TIMEOUT = 10000;
 describe("Starship controller", () => {
   test('Get all starships', async () => {
     const { body } = await request.get('/starships/').timeout(TIMEOUT);
-    expect(body.length).toStrictEqual(1);
+    expect(body.items.length).toStrictEqual(1);
   })  
   
   test('Get starship by id', async () => {

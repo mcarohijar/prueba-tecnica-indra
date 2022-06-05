@@ -28,7 +28,7 @@ async function getStarshipById(starshipId) {
     };
     dbResponse = await dbConnection.scan(params).promise();
   } catch (err) {
-    throw new errors.BdConnectionError(serviceName);
+    throw new errors.BdConnectionError('starship');
   }
   if (!dbResponse.Items.length) return null;
   return dbResponse.Items[0];

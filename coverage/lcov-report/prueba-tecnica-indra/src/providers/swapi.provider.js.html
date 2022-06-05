@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for prueba-tecnica-indra/test/starships.mocks.js</title>
+    <title>Code coverage report for prueba-tecnica-indra/src/providers/swapi.provider.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">prueba-tecnica-indra/test</a> starships.mocks.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">prueba-tecnica-indra/src/providers</a> swapi.provider.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.11% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/17</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/12</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.85% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/14</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
@@ -82,45 +82,54 @@
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">jest.mock('aws-sdk', () =&gt; {
-  const mPromiseScan = {
-    promise: jest
-      .fn(<span class="fstat-no" title="function not covered" >()</span> =&gt; { <span class="cstat-no" title="statement not covered" >return { Items: [] } </span>}) // default mock
-      .mockImplementationOnce(() =&gt; { return { Items: [{ id: 12 }] } }) // mock for getAll 200
-      .mockImplementationOnce(() =&gt; { return { Items: [{ id: 3 }] } }) // mock for getId 200
-      .mockImplementationOnce(() =&gt; { return { Items: [] } }) // mock for register 200
-      .mockImplementationOnce(() =&gt; {}) // mock for getAll 500
-      .mockImplementationOnce(() =&gt; { return { Items: [] } }) // mock for getById 404
-      .mockImplementationOnce(() =&gt; { return { Items: [{ id: 3 }] } }) // mock for register 400
-  };
-  const mPromisePut = {
-    promise: jest.fn(() =&gt; { return { Items: [] } }) // default mock
-  };
-  const mDocumentClient = { put: jest.fn(() =&gt; mPromisePut), scan: jest.fn(() =&gt; mPromiseScan) };
-  const mDynamoDB = { DocumentClient: jest.fn(() =&gt; mDocumentClient) };
-  return { DynamoDB: mDynamoDB };
-});
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const axios = require('axios');
+const errors = require('../errors/errors.js');
+const { SWAPI_URL } = process.env;
 &nbsp;
-jest.mock("axios");</pre></td></tr></table></pre>
+const STARSHIP_URL = `${SWAPI_URL}/starships`;
+&nbsp;
+async function getStarshipById(starshipId) {
+  let apiResponse = null;
+  try {
+    const getStarshipUrl = `${STARSHIP_URL}/${starshipId}`;
+    const { data } = await axios.get(getStarshipUrl);
+    apiResponse = data;
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    console.log('get starship from swapi Error: ', err.message);</span>
+<span class="cstat-no" title="statement not covered" >    throw new errors.ApiConnectionException('starships');</span>
+  }
+  return apiResponse;
+}
+&nbsp;
+module.exports = {
+  getStarshipById,
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
@@ -129,14 +138,14 @@ jest.mock("axios");</pre></td></tr></table></pre>
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at Sat Jun 04 2022 18:57:01 GMT-0500 (Peru Standard Time)
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     
